@@ -2,6 +2,7 @@ plugins {
     kotlin("jvm") version "1.3.61"
 }
 
+group = "org.inego.takeoffrun"
 version = "0.0.1"
 
 repositories {
@@ -10,7 +11,6 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation(project(":common"))
 }
 
 tasks {
