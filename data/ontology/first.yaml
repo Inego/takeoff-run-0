@@ -1,0 +1,24 @@
+relations:
+  mono:
+    - animal
+    - human
+    - male
+    - female
+    - child
+    - young
+    - old
+    - thing
+    - book
+  symmetrical:
+    - sibling
+    - spouse
+  actions-transitive:
+    - own
+    - read
+
+
+
+
+
+
+
