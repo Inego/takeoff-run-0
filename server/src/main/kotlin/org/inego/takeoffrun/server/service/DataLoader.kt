@@ -2,41 +2,32 @@
 
 package org.inego.takeoffrun.server.service
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import io.ktor.util.extension
-import org.apache.logging.log4j.Level
-import org.apache.logging.log4j.LogManager
-import org.apache.logging.log4j.Logger
-import org.snakeyaml.engine.v2.api.Load
-import org.snakeyaml.engine.v2.api.LoadSettings
-import java.io.FileInputStream
+import org.apache.logging.log4j.kotlin.logger
 import java.nio.file.FileSystems
 import java.nio.file.Files
-import org.apache.logging.log4j.kotlin.logger
 
 val YAML_EXTENSIONS = listOf("yaml", "yml")
 
-val logger = logger("Data loader")
+val log = logger("DataLoader")
 
 fun main() {
+    log.info("Starting import...")
 
-    LogManager.getRootLogger()
-
-    logger.info("123")
-
-    val loadSettings = LoadSettings.builder().build()
-
-    val load = Load(loadSettings)
-
+    val yamlFactory = YAMLFactory()
+    val objectMapper = ObjectMapper(yamlFactory)
 
     val ontologyPath = FileSystems.getDefault().getPath("data/ontology")
 
     Files.walk(ontologyPath, 1)
             .filter { it.extension in YAML_EXTENSIONS }
             .forEach {
-//                println(it)
-                val loaded = load.loadFromInputStream(FileInputStream(it.toFile())) as Map<String, Any>
-                val relations = loaded["relations"]
-
+                log.info("Importing $it")
+                val readValue = objectMapper.readValue(it.toFile(), Any::class.java)
+                log.info(readValue)
             }
 
+    log.info("Import finished.")
 }
