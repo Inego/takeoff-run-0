@@ -3,7 +3,7 @@ package org.inego.takeoffrun.common.sem.ontology.impl
 import org.inego.takeoffrun.common.sem.ontology.RelationSlot
 import java.util.*
 
-abstract class MonoRelation(id: UUID, name: String) : BaseRelation(id, name) {
+class MonoRelation(id: UUID, name: String) : BaseRelation(id, name) {
     override val slots: Collection<RelationSlot>
         get() = listOf(MonoSlot)
 }

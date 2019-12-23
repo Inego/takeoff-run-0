@@ -37,6 +37,8 @@ dependencies {
     compile("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${Versions.jackson}")
     compile("com.fasterxml.jackson.core:jackson-databind:${Versions.jackson}")
 
+    compile("com.google.guava:guava:28.1-jre")
+
     implementation(kotlin("stdlib-jdk8"))
     implementation(project(":common"))
 }
