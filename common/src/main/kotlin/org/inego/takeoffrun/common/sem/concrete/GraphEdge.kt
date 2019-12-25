@@ -6,5 +6,5 @@ import org.inego.takeoffrun.common.sem.ontology.RelationSlot
 interface GraphEdge {
     val relation: Relation
 
-    fun slotNode(slot: RelationSlot): Int
+    fun slotNode(slot: RelationSlot): SlotTarget
 }

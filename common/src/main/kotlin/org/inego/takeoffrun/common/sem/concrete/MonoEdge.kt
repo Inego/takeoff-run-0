@@ -4,10 +4,11 @@ import org.inego.takeoffrun.common.sem.ontology.impl.MonoRelation
 import org.inego.takeoffrun.common.sem.ontology.impl.MonoSlot
 import org.inego.takeoffrun.common.sem.ontology.RelationSlot
 
-class MonoEdge(override val relation: MonoRelation, private val node: Int) : GraphEdge {
+class MonoEdge(override val relation: MonoRelation, node: Int) : GraphEdge {
+    private val target = SlotTarget.Mono(node)
 
-    override fun slotNode(slot: RelationSlot): Int {
+    override fun slotNode(slot: RelationSlot): SlotTarget.Mono {
         assert(slot == MonoSlot)
-        return node
+        return target
     }
 }
