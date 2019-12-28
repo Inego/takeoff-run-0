@@ -8,7 +8,9 @@ import io.ktor.util.extension
 import org.apache.logging.log4j.kotlin.logger
 import org.inego.takeoffrun.common.sem.ontology.Relation
 import org.inego.takeoffrun.common.sem.ontology.impl.MonoRelation
-import org.inego.takeoffrun.server.utils.hash
+import org.inego.takeoffrun.common.sem.ontology.impl.SymmetricalRelation
+import org.inego.takeoffrun.common.sem.ontology.impl.VerbTransitiveRelation
+import org.inego.takeoffrun.common.utils.hash
 import java.io.FileInputStream
 import java.io.InputStream
 import java.nio.file.FileSystems
@@ -60,9 +62,8 @@ object DataLoader {
 
         val result = ArrayList<Relation>()
 
-        val monoRelations = readRelationsMono(map["mono"] as List<String>)
-
-        result.addAll(monoRelations)
+        result.addAll(readRelationsMono(map["mono"] as List<String>))
+        result.addAll(readRelationsSymmetrical(map["symmetrical"] as List<String>))
 
         return result
     }
@@ -75,6 +76,27 @@ object DataLoader {
         log.info("Reading mono relations: $list")
 
         return list.map { MonoRelation(hash(it), it) }
+    }
+
+    private fun readRelationsSymmetrical(list: List<String>?): List<SymmetricalRelation> {
+        if (list == null) {
+            return emptyList()
+        }
+
+        log.info("Reading symmetrical relations: $list")
+
+        return list.map { SymmetricalRelation(hash(it), it) }
+    }
+
+
+    private fun readRelationsVerbTransitive(list: List<String>?): List<VerbTransitiveRelation> {
+        if (list == null) {
+            return emptyList()
+        }
+
+        log.info("Reading verb-transitive relations: $list")
+
+        return list.map { VerbTransitiveRelation(hash(it), it) }
     }
 
 }

@@ -4,15 +4,16 @@ import org.inego.takeoffrun.common.sem.concrete.SlotTarget
 import org.inego.takeoffrun.common.sem.ontology.RelationSlot
 import java.util.*
 
-class MonoRelation(id: UUID, name: String) : BaseRelation(id, name) {
+class SymmetricalRelation(id: UUID, name: String) : BaseRelation(id, name) {
     override val slots: Collection<RelationSlot> = Slots
 
     companion object {
         val Slot = RelationSlotImpl(
-                "2c5bc945-39cc-42c2-8b84-2d582953fa01",
-                "Slot",
-                SlotTarget.Mono::class
+                "357d73a2-973e-4188-8df7-884a86e1ee9e",
+                "Symmetrical",
+                SlotTarget.Symmetrical::class
         )
-        val Slots = listOf(SymmetricalRelation.Slot)
+        val Slots = listOf(Slot)
     }
 }
+

@@ -1,6 +1,6 @@
 
 
-package org.inego.takeoffrun.server.utils
+package org.inego.takeoffrun.common.utils
 
 import com.google.common.hash.Hashing
 import java.nio.ByteBuffer
