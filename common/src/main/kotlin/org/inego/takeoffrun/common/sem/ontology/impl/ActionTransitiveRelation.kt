@@ -4,7 +4,7 @@ import org.inego.takeoffrun.common.sem.concrete.SlotTarget
 import org.inego.takeoffrun.common.sem.ontology.RelationSlot
 import java.util.*
 
-class VerbTransitiveRelation(id: UUID, name: String) : BaseRelation(id, name) {
+class ActionTransitiveRelation(id: UUID, name: String) : BaseRelation(id, name) {
     override val slots: Collection<RelationSlot> = Slots
 
     companion object {

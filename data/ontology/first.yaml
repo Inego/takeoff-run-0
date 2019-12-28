@@ -12,7 +12,7 @@ relations:
   symmetrical:
     - sibling
     - spouse
-  actions-transitive:
+  action-transitive:
     - own
     - read
 

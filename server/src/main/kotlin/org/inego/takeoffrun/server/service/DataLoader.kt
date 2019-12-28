@@ -9,7 +9,7 @@ import org.apache.logging.log4j.kotlin.logger
 import org.inego.takeoffrun.common.sem.ontology.Relation
 import org.inego.takeoffrun.common.sem.ontology.impl.MonoRelation
 import org.inego.takeoffrun.common.sem.ontology.impl.SymmetricalRelation
-import org.inego.takeoffrun.common.sem.ontology.impl.VerbTransitiveRelation
+import org.inego.takeoffrun.common.sem.ontology.impl.ActionTransitiveRelation
 import org.inego.takeoffrun.common.utils.hash
 import java.io.FileInputStream
 import java.io.InputStream
@@ -62,8 +62,10 @@ object DataLoader {
 
         val result = ArrayList<Relation>()
 
+        // TODO refactor
         result.addAll(readRelationsMono(map["mono"] as List<String>))
         result.addAll(readRelationsSymmetrical(map["symmetrical"] as List<String>))
+        result.addAll(readRelationsActionTransitive(map["action-transitive"] as List<String>))
 
         return result
     }
@@ -89,14 +91,14 @@ object DataLoader {
     }
 
 
-    private fun readRelationsVerbTransitive(list: List<String>?): List<VerbTransitiveRelation> {
+    private fun readRelationsActionTransitive(list: List<String>?): List<ActionTransitiveRelation> {
         if (list == null) {
             return emptyList()
         }
 
-        log.info("Reading verb-transitive relations: $list")
+        log.info("Reading action-transitive relations: $list")
 
-        return list.map { VerbTransitiveRelation(hash(it), it) }
+        return list.map { ActionTransitiveRelation(hash(it), it) }
     }
 
 }

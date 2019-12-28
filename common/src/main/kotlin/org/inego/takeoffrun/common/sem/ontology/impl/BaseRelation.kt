@@ -6,4 +6,8 @@ import java.util.*
 
 abstract class BaseRelation(override val id: UUID, override val name: String) : Relation {
     constructor(name: String) : this(hash(name), name)
+
+    override fun toString(): String {
+        return "$name ($id)";
+    }
 }
