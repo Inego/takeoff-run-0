@@ -75,7 +75,7 @@ object DataLoader {
 
         log.info("Reading mono relations: $list")
 
-        return list.map { MonoRelation(hash(it), it) }
+        return list.map { MonoRelation(it) }
     }
 
     private fun readRelationsSymmetrical(list: List<String>?): List<SymmetricalRelation> {
