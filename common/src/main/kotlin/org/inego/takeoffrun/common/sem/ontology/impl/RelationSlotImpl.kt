@@ -16,4 +16,6 @@ data class RelationSlotImpl(
             name,
             targetType
     )
+
+    override fun toString(): String = "$name (${targetType.simpleName})"
 }

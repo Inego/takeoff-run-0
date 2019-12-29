@@ -10,4 +10,6 @@ class MonoEdge(override val relation: MonoRelation, node: Int) : GraphEdge {
         assert(slot == MonoRelation.Slot)
         return target
     }
+
+    override fun toString(): String = "${relation.name} : $target"
 }

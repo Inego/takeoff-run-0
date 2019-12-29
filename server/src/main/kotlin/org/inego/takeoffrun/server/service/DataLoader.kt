@@ -39,6 +39,13 @@ fun main() {
     val ontology = loadState.ontologyBuilder.build()
 
     log.info("Import finished.")
+
+    val semGraphGenerator = SemGraphGenerator(ontology)
+
+    repeat(100) {
+        semGraphGenerator.generateSemGraph(3)
+    }
+
 }
 
 object DataLoader {
@@ -87,7 +94,7 @@ object DataLoader {
 
         log.info("Reading symmetrical relations: $list")
 
-        return list.map { SymmetricalRelation(hash(it), it) }
+        return list.map { SymmetricalRelation(it) }
     }
 
 
@@ -98,7 +105,7 @@ object DataLoader {
 
         log.info("Reading action-transitive relations: $list")
 
-        return list.map { ActionTransitiveRelation(hash(it), it) }
+        return list.map { ActionTransitiveRelation(it) }
     }
 
 }
