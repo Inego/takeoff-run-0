@@ -8,7 +8,7 @@ import java.util.*
 class ActionTransitiveRelation(id: UUID, name: String) : BaseRelation(id, name) {
     constructor(name: String) : this(hash(name), name)
 
-    override val slots: Collection<RelationSlot> = Slots
+    override val slots: List<RelationSlot> = Slots
 
     companion object {
         val SubjectSlot = RelationSlotImpl(

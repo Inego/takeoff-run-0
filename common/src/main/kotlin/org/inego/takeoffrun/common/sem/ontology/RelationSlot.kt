@@ -8,5 +8,8 @@ interface RelationSlot {
     val id: UUID
     val name: String
 
-    val targetType: KClass<out SlotTarget>;
+    val targetType: KClass<out SlotTarget>
+
+    val isMono: Boolean
+        get() = targetType == SlotTarget.Mono::class
 }

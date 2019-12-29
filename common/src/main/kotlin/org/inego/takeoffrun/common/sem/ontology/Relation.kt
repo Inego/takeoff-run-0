@@ -5,5 +5,5 @@ import java.util.*
 interface Relation {
     val id: UUID
     val name: String
-    val slots: Collection<RelationSlot>
+    val slots: List<RelationSlot>
 }
