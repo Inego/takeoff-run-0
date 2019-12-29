@@ -36,21 +36,17 @@ private class SemGraphPrinterState(val semanticGraph: SemanticGraph) {
                     if (slots.size == 2 && slots[0].isMono && slots[1].isMono) {
                         renderBiRelation(edge, edge.monoSlotTarget(0), edge.monoSlotTarget(1), false)
                     } else {
-
-
-
                         previousNode = -1
 
-                        if (currentString.isNotEmpty()) {
-                            edgeStrings.add(currentString.toString())
-                            currentString.clear()
-                        }
+                        finalizePreviousString()
 
                         TODO("Not implemented")
                     }
                 }
             }
         }
+
+        finalizePreviousString()
 
         // Third pass: list not introduced
 
@@ -65,11 +61,8 @@ private class SemGraphPrinterState(val semanticGraph: SemanticGraph) {
 
         if (eff1 != previousNode) {
             // Add previous and start from scratch
-            if (currentString.isNotEmpty()) {
-                edgeStrings.add(currentString.toString())
-                currentString.clear()
-                currentString.append(renderNode(eff1))
-            }
+            finalizePreviousString()
+            currentString.append(renderNode(eff1))
         }
 
         currentString
@@ -82,12 +75,19 @@ private class SemGraphPrinterState(val semanticGraph: SemanticGraph) {
         // Expand previous (done below)
     }
 
+    private fun finalizePreviousString() {
+        if (currentString.isNotEmpty()) {
+            edgeStrings.add(currentString.toString())
+            currentString.clear()
+        }
+    }
+
     fun renderNode(idx: Int): String {
         if (idx in introducedNodes) {
             return "$idx"
         }
         introducedNodes.add(idx)
-        val relNames = nodeMonoProps[idx].joinToString(", ")
+        val relNames = nodeMonoProps[idx].map { it.name }.joinToString(", ")
         return "$idx ($relNames)"
     }
 }

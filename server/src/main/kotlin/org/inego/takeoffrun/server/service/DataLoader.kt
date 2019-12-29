@@ -43,9 +43,9 @@ fun main() {
     val semGraphGenerator = SemGraphGenerator(ontology)
 
     repeat(100) {
-        semGraphGenerator.generateSemGraph(3)
+        val graph = semGraphGenerator.generateSemGraph(5)
+        println(graph.print())
     }
-
 }
 
 object DataLoader {
