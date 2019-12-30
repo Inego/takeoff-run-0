@@ -7,11 +7,17 @@ import org.inego.takeoffrun.common.sem.ontology.RelationSlot
 import org.inego.takeoffrun.common.sem.ontology.impl.MonoRelation
 import org.inego.takeoffrun.common.sem.ontology.impl.SymmetricalRelation
 import org.inego.takeoffrun.server.utils.listOfRandomFrom
+import org.inego.takeoffrun.server.utils.randomSmallSublist
 import kotlin.random.Random
 
-class SemGraphGenerator(private val ontology: Ontology) {
+class SemGraphGenerator(ontology: Ontology) {
 
     val rnd = Random.Default
+
+    val ontologyRelations = ontology.relations
+
+    val monoRelations = ontologyRelations.filterIsInstance<MonoRelation>()
+    val otherRelations = ontologyRelations.filterNot { it is MonoRelation }
 
     fun generateSemGraph(nodeCount: Int): SemanticGraph {
 
@@ -21,25 +27,28 @@ class SemGraphGenerator(private val ontology: Ontology) {
 
         val nodeCountRange = 0 until nodeCount;
 
-        val ontologyRelations = ontology.relations
-
         val graphEdges = ArrayList<GraphEdge>()
 
-        // Randomly add edges until all nodes belong to the 0 cluster,
-        // that is, its size is equal to nodeCount
-
         val clusters = ArrayList<HashSet<Int>>(nodeCount)
+
+        // First, assign every node some mono relations
+        for (node in nodeCountRange) {
+            randomSmallSublist(monoRelations, (1..2).random()).mapTo(graphEdges) {  MonoEdge(it, node) }
+        }
+
+        // Randomly add non-mono edges until all nodes belong to the 0 cluster,
+        // that is, its size is equal to nodeCount
 
         val nodeClusters = IntArray(nodeCount) { -1 }
 
         while (clusters.isEmpty() || clusters[0].size < nodeCount) {
-            val relation = ontologyRelations.random()
+            val relation = otherRelations.random()
 
             val newEdge: GraphEdge
 
             when (relation) {
                 is MonoRelation -> {
-                    newEdge = MonoEdge(relation, nodeCountRange.random())
+                    error("Mono relation")
                 }
                 is SymmetricalRelation -> {
                     val target = generateSymmetricalTarget(nodeCount)
@@ -64,9 +73,6 @@ class SemGraphGenerator(private val ontology: Ontology) {
                         affectedNodes.addAll(slotTarget.targets)
                     }
 
-                    // First pass:
-                    // For all nodes in the slot target, determine the smallest cluster number (if any)
-
                     newEdge = GraphEdgeImpl(relation, slotTargetMap)
                     processClusters(affectedNodes, nodeClusters, clusters)
                 }
@@ -82,6 +88,10 @@ class SemGraphGenerator(private val ontology: Ontology) {
             SlotTarget.Symmetrical(rnd.nextInt(nodeCount), rnd.nextInt(nodeCount))
 
     private fun processClusters(affectedNodes: Set<Int>, nodeClusters: IntArray, clusters: ArrayList<HashSet<Int>>) {
+
+        // First pass:
+        // For all nodes in the slot target, determine the smallest cluster number (if any)
+
         var minCluster: Int? = null
 
         for (target in affectedNodes) {
