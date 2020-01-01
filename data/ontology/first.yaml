@@ -39,11 +39,11 @@ relations:
     - yellow
     - empty
     - full
-    - plate
     - car
     - bicycle
     - bus
     - taxi
+    - transport-train
     - house
     - building
     - sun
@@ -96,6 +96,7 @@ relations:
     - lake
     - ocean
     - sea
+    - shore
     - mountain
     - hill
     - forest
@@ -141,6 +142,18 @@ relations:
     - airport
     - ticket
     - passport
+    - clean
+    - dirty
+    - washing-machine
+    - sink
+    - fridge
+    - kitchen-oven
+    - kitchen-stove
+    - plate
+    - glass
+    - right
+    - left
+    - side
   symmetrical:
     - sibling
     - spouse
