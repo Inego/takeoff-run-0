@@ -5,14 +5,14 @@ fun <E> randomSublist(src: Iterable<E>, size: Int): List<E> {
     return src.shuffled().take(size)
 }
 
-fun <E> randomSmallSublist(src: List<E>, size: Int): List<E> {
+fun <E> List<E>.randomSmallSublist(size: Int): List<E> {
     if (size == 1) {
-        return listOf(src.random())
+        return listOf(this.random())
     }
 
     val result = mutableListOf<E>()
     while (result.size < size) {
-        val next = src.random()
+        val next = this.random()
         if (next !in result) {
             result.add(next)
         }

@@ -12,12 +12,12 @@ import kotlin.random.Random
 
 class SemGraphGenerator(ontology: Ontology) {
 
-    val rnd = Random.Default
+    private val rnd = Random.Default
 
-    val ontologyRelations = ontology.relations
+    private val ontologyRelations = ontology.relations
 
-    val monoRelations = ontologyRelations.filterIsInstance<MonoRelation>()
-    val otherRelations = ontologyRelations.filterNot { it is MonoRelation }
+    private val monoRelations = ontologyRelations.filterIsInstance<MonoRelation>()
+    private val otherRelations = ontologyRelations.filterNot { it is MonoRelation }
 
     fun generateSemGraph(nodeCount: Int): SemanticGraph {
 
@@ -25,7 +25,8 @@ class SemGraphGenerator(ontology: Ontology) {
             throw AssertionError("Too few nodes")
         }
 
-        val nodeCountRange = 0 until nodeCount;
+        val nodeCountRange = 0 until nodeCount
+        val nodeList = nodeCountRange.toList()
 
         val graphEdges = ArrayList<GraphEdge>()
 
@@ -33,7 +34,7 @@ class SemGraphGenerator(ontology: Ontology) {
 
         // First, assign every node some mono relations
         for (node in nodeCountRange) {
-            randomSmallSublist(monoRelations, (1..2).random()).mapTo(graphEdges) {  MonoEdge(it, node) }
+            monoRelations.randomSmallSublist((1..2).random()).mapTo(graphEdges) {  MonoEdge(it, node) }
         }
 
         // Randomly add non-mono edges until all nodes belong to the 0 cluster,
@@ -51,7 +52,7 @@ class SemGraphGenerator(ontology: Ontology) {
                     error("Mono relation")
                 }
                 is SymmetricalRelation -> {
-                    val target = generateSymmetricalTarget(nodeCount)
+                    val target = generateSymmetricalTarget(nodeCount, nodeList)
                     newEdge = SymmetricalEdge(relation, target)
                     processClusters(target.targets.toSet(), nodeClusters, clusters)
                 }
@@ -65,7 +66,7 @@ class SemGraphGenerator(ontology: Ontology) {
 
                         val slotTarget =  when (slot.targetType) {
                             SlotTarget.Mono::class ->  SlotTarget.Mono(rnd.nextInt(nodeCount))
-                            SlotTarget.Symmetrical::class -> generateSymmetricalTarget(nodeCount)
+                            SlotTarget.Symmetrical::class -> generateSymmetricalTarget(nodeCount, nodeList)
                             else ->  SlotTarget.Multi(listOfRandomFrom(nodeCountRange, rnd.nextInt(2, 3)))
                         }
 
@@ -84,8 +85,10 @@ class SemGraphGenerator(ontology: Ontology) {
         return SemanticGraphImpl(nodeCount, graphEdges)
     }
 
-    private fun generateSymmetricalTarget(nodeCount: Int) =
-            SlotTarget.Symmetrical(rnd.nextInt(nodeCount), rnd.nextInt(nodeCount))
+    private fun generateSymmetricalTarget(nodeCount: Int, nodeList: List<Int>): SlotTarget.Symmetrical {
+        val sublist = nodeList.randomSmallSublist(nodeCount)
+        return SlotTarget.Symmetrical(sublist[0], sublist[1])
+    }
 
     private fun processClusters(affectedNodes: Set<Int>, nodeClusters: IntArray, clusters: ArrayList<HashSet<Int>>) {
 
