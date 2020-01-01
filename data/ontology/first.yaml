@@ -4,21 +4,181 @@ relations:
     - human
     - male
     - female
-    - child
-    - young
-    - old
+    - age-child
+    - age-young
+    - age-mid
+    - age-old
+    - cat
+    - dog
+    - bird
+    - fish
     - thing
     - book
+    - magazine
+    - table
+    - chair
+    - door
+    - room
+    - kitchen
+    - living-room
+    - sleeping-room
+    - bed
+    - pillow
+    - blanket
+    - bathroom
+    - floor
+    - wall
+    - ceiling
+    - window
+    - road
+    - white
+    - black
+    - red
+    - green
+    - blue
+    - yellow
+    - empty
+    - full
+    - plate
+    - car
+    - bicycle
+    - bus
+    - taxi
+    - house
+    - building
+    - sun
+    - star
+    - sky
+    - cloud
+    - air
+    - water
+    - food
+    - wine
+    - beer
+    - creation-new
+    - creation-old
+    - typical
+    - atypical
+    - weight-heavy
+    - weight-light
+    - quick
+    - slow
+    - opened
+    - closed
+    - shop
+    - market
+    - dark
+    - light
+    - hot
+    - warm
+    - cold
+    - language
+    - guitar
+    - piano
+    - music
+    - toy
+    - expensive
+    - cheap
+    - game
+    - chess
+    - cards
+    - big
+    - small
+    - strong
+    - weak
+    - interesting
+    - boring
+    - jeans
+    - shirt
+    - city
+    - country
+    - river
+    - lake
+    - ocean
+    - sea
+    - mountain
+    - hill
+    - forest
+    - park
+    - village
+    - cinema
+    - theater
+    - actor
+    - singer
+    - writer
+    - journalist
+    - movie
+    - series
+    - well-known
+    - beautiful
+    - talented
+    - rich
+    - poor
+    - successful
+    - hospital
+    - doctor
+    - teacher
+    - student
+    - school
+    - university
+    - policeman
+    - happy
+    - sad
+    - angry
+    - sick
+    - healthy
+    - tired
+    - floor
+    - tree
+    - grass
+    - mobile-phone
+    - daytime-morning
+    - daytime-noon
+    - daytime-pm
+    - daytime-evening
+    - daytime-night
+    - airplane
+    - airport
+    - ticket
+    - passport
   symmetrical:
     - sibling
     - spouse
+    - friend-2
   action-transitive:
     - own
     - read
-
-
-
-
-
-
-
+    - be-inside
+    - be-outside
+    - sit-on
+    - build
+    - create
+    - invent
+    - ride-drive
+    - passenger-of
+    - learn
+    - speak
+    - understand
+    - know
+    - want
+    - demand
+    - decide
+    - forget
+    - refuse
+    - play-game
+    - play-instrument
+    - lose-track
+    - find
+    - parent
+    - love
+    - like
+    - interested-in
+    - see
+    - hear
+    - take
+    - hold
+    - wear
+    - visit
+    - leave
+    - enter
+    - arrive
