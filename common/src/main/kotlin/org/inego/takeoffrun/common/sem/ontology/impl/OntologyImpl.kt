@@ -7,5 +7,5 @@ class OntologyImpl(override val relations: Collection<Relation>) : Ontology {
 
     private val relationIndex = relations.associateBy { it.name }
 
-    override fun findByName(name: String) = relationIndex[name]
+    override fun findRelationByName(name: String) = relationIndex[name]
 }

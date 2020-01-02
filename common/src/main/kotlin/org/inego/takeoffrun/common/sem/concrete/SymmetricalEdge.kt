@@ -6,6 +6,9 @@ import org.inego.takeoffrun.common.sem.ontology.impl.SymmetricalRelation
 
 class SymmetricalEdge(override val relation: Relation, private val target: SlotTarget.Symmetrical) : GraphEdge {
 
+    constructor(relation: Relation, target1: Int, target2: Int)
+            : this(relation, SlotTarget.Symmetrical(target1, target2))
+
     override fun slotNode(slot: RelationSlot): SlotTarget.Symmetrical {
         assert(slot == SymmetricalRelation.Slot)
         return target

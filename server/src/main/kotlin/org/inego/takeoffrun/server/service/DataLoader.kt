@@ -22,7 +22,7 @@ import org.intellij.lang.annotations.Language as IdeaLang
 
 val YAML_EXTENSIONS = listOf("yaml", "yml")
 
-val log = logger("DataLoader")
+private val log = logger("DataLoader")
 
 fun main() {
     log.info("Starting import...")
@@ -43,20 +43,25 @@ fun main() {
     log.info("Import finished.")
 
 //    testGenerate(ontology)
-    testParseSemGraph()
+    testParseSemGraph(ontology)
 }
 
-fun testParseSemGraph() {
+fun testParseSemGraph(ontology: Ontology) {
 
+    // "I'm listening to a song of my sister"
     @IdeaLang("YAML")
-    val graph = """
-        @speaker: 0
+    val yaml = """
+        _speaker: 0
         female: 1
         song: 2
         sibling: [0, 1]
         author-of: [1, 2]
         listen-to: [0, 2]
         """.trimIndent()
+
+    val parser = SemGraphYamlParser(ontology)
+    val graph = parser.parseYaml(yaml)
+    println(graph.print())
 }
 
 private fun testGenerate(ontology: Ontology) {
