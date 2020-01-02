@@ -6,17 +6,19 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import io.ktor.util.extension
 import org.apache.logging.log4j.kotlin.logger
+import org.inego.takeoffrun.common.sem.ontology.Ontology
 import org.inego.takeoffrun.common.sem.ontology.Relation
+import org.inego.takeoffrun.common.sem.ontology.impl.ActionTransitiveRelation
 import org.inego.takeoffrun.common.sem.ontology.impl.MonoRelation
 import org.inego.takeoffrun.common.sem.ontology.impl.SymmetricalRelation
-import org.inego.takeoffrun.common.sem.ontology.impl.ActionTransitiveRelation
-import org.inego.takeoffrun.common.utils.hash
+import org.inego.takeoffrun.server.utils.StringAny
 import java.io.FileInputStream
 import java.io.InputStream
 import java.nio.file.FileSystems
 import java.nio.file.Files
+import org.intellij.lang.annotations.Language as IdeaLang
 
-typealias StringAny = Map<String, Any>
+
 
 val YAML_EXTENSIONS = listOf("yaml", "yml")
 
@@ -40,8 +42,25 @@ fun main() {
 
     log.info("Import finished.")
 
-    val semGraphGenerator = SemGraphGenerator(ontology)
+//    testGenerate(ontology)
+    testParseSemGraph()
+}
 
+fun testParseSemGraph() {
+
+    @IdeaLang("YAML")
+    val graph = """
+        @speaker: 0
+        female: 1
+        song: 2
+        sibling: [0, 1]
+        author-of: [1, 2]
+        listen-to: [0, 2]
+        """.trimIndent()
+}
+
+private fun testGenerate(ontology: Ontology) {
+    val semGraphGenerator = SemGraphGenerator(ontology)
     repeat(100) {
         val graph = semGraphGenerator.generateSemGraph(3)
         println(graph.print())

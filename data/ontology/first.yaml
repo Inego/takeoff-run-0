@@ -154,6 +154,7 @@ relations:
     - right
     - left
     - side
+    - song
   symmetrical:
     - sibling
     - spouse
@@ -161,6 +162,8 @@ relations:
   action-transitive:
     - own
     - read
+    - listen-to
+    - author-of
     - be-inside
     - be-outside
     - sit-on
