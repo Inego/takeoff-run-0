@@ -1,0 +1,65 @@
+rules:
+  - template:
+      _speaker: 0
+    output:
+      cls: pp
+      val: я
+      links: _speaker.0
+
+  - template:
+      song: 0
+    output:
+      cls: n
+      val: песня
+      links: song.0
+
+  - template:
+      female: 0
+      _speaker: 1
+      siblings: [0, 1]
+    output:
+      _NG:
+      - сls: pp
+        val: мой
+        links: _speaker.1
+        pull: gender.next
+      - cls: n
+        val: сестра
+        links:
+        - female.0
+        - siblings.0
+
+#   Verb-transitive:  subj.nom verb obj.acc
+  - template:
+      _NG: [0, 1]
+      listen-to: [0, 1]
+    output:
+      sentence:
+      - cls: NG
+        val: 0
+        set: case.nom
+        links: listen-to.0
+      - cls: v
+        val: слушать
+        pull: person.prev
+        links: listen-to
+      - cls: NG
+        val: 1
+        set: case.acc
+        links: listen-to.1
+
+  - template:
+      _NG: [0, 1]
+      author-of: [0, 1]
+    output:
+      NG:
+      - cls: NG
+        val: 1
+        links: author-of.1
+      - cls: NG
+        val: 0
+        set: case.gen
+        links: author-of.0
+
+
+
