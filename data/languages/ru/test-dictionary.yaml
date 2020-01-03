@@ -1,0 +1,49 @@
+dictionary:
+  pp:
+    words:
+      я:
+        person: 1st
+        forms:
+          nom: я
+      мой:
+        forms:
+          masc:
+            nom: мой
+            acc:
+              anim: моего́
+              inanim: мой
+            gen: моего́
+          fem:
+            nom: моя́
+            acc: мою́
+            gen: мое́й
+          neu:
+            nom: моё
+            acc: моё
+            gen: моего́
+  n:
+    words:
+      песня:
+        gender: fem
+        forms: песня.пе́сн
+      сестра:
+        gender: fem
+        forms: сестра.сестр
+    templates:
+      песня:
+        nom: @я
+        acc: @ю
+        gen: @и
+      сестра:
+        nom: @а́
+        acc: @у́
+        gen: @ы́
+  v:
+    words:
+      слушать:
+        forms: думать.слу́ша
+    templates:
+      думать:
+        1st: @ю
+        2nd: @ешь
+        3rd: @ет
