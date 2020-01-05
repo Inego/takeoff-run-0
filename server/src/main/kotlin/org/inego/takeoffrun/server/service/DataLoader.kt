@@ -2,8 +2,6 @@
 
 package org.inego.takeoffrun.server.service
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import io.ktor.util.extension
 import org.apache.logging.log4j.kotlin.logger
 import org.inego.takeoffrun.common.sem.ontology.Ontology
@@ -19,7 +17,6 @@ import java.nio.file.Files
 import org.intellij.lang.annotations.Language as IdeaLang
 
 
-
 val YAML_EXTENSIONS = listOf("yaml", "yml")
 
 private val log = logger("DataLoader")
@@ -27,9 +24,24 @@ private val log = logger("DataLoader")
 fun main() {
     log.info("Starting import...")
 
+    val defaultFs = FileSystems.getDefault()
+
+    val ontology = loadOntology()
+
+    LanguageLoader.load(defaultFs.getPath("data/languages"))
+
+    log.info("Import finished.")
+
+//    testGenerate(ontology)
+    testParseSemGraph(ontology)
+}
+
+private fun loadOntology(): Ontology {
+    log.info("Loading ontology...")
+
     val ontologyPath = FileSystems.getDefault().getPath("data/ontology")
 
-    val loadState = LoadState.new()
+    val loadState = OntologyLoadState.new()
 
     Files.walk(ontologyPath, 1)
             .filter { it.extension in YAML_EXTENSIONS }
@@ -40,10 +52,8 @@ fun main() {
 
     val ontology = loadState.ontologyBuilder.build()
 
-    log.info("Import finished.")
-
-//    testGenerate(ontology)
-    testParseSemGraph(ontology)
+    log.info("Ontology loaded.")
+    return ontology
 }
 
 fun testParseSemGraph(ontology: Ontology) {
@@ -73,15 +83,13 @@ private fun testGenerate(ontology: Ontology) {
 }
 
 object DataLoader {
-    private val yamlFactory = YAMLFactory()
-    private val objectMapper = ObjectMapper(yamlFactory)
 
-    fun load(loadState: LoadState, inputStream: InputStream) {
+    fun load(ontologyLoadState: OntologyLoadState, inputStream: InputStream) {
         val readValue = objectMapper.readValue(inputStream, Any::class.java) as StringAny
 
         val relations = readRelations(readValue["relations"] as StringAny)
 
-        loadState.ontologyBuilder.addRelations(relations)
+        ontologyLoadState.ontologyBuilder.addRelations(relations)
     }
 
     private fun readRelations(map: StringAny?): List<Relation> {

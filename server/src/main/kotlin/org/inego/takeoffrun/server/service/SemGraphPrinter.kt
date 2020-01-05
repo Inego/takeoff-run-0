@@ -1,6 +1,8 @@
 package org.inego.takeoffrun.server.service
 
 import org.inego.takeoffrun.common.sem.concrete.*
+import org.inego.takeoffrun.common.sem.concrete.impl.MonoEdge
+import org.inego.takeoffrun.common.sem.concrete.impl.SymmetricalEdge
 import org.inego.takeoffrun.common.sem.ontology.Relation
 import java.lang.StringBuilder
 

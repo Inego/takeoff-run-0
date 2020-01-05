@@ -1,0 +1,22 @@
+grammaticalFeatures:
+  - name: case
+    values:
+      - name: nominative
+        shortName: nom
+      - name: genitive
+        shortName: gen
+      - name: accusative
+        shortName: acc
+  - name: gender
+    values:
+      - name: feminine
+        shortName: fem
+      - name: masculine
+        shortName: masc
+      - name: neuter
+        shortName: neu
+  - name: person
+    values:
+      - name: 1st
+      - name: 2nd
+      - name: 3rd

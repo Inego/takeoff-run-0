@@ -1,0 +1,7 @@
+partsOfSpeech:
+  - name: Verb
+    shortName: v
+  - name: Noun
+    shortName: n
+  - name: Pronoun
+    shortName: pp

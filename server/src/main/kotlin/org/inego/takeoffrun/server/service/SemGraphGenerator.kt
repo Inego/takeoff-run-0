@@ -1,7 +1,10 @@
 package org.inego.takeoffrun.server.service
 
 import org.inego.takeoffrun.common.sem.concrete.*
+import org.inego.takeoffrun.common.sem.concrete.impl.GraphEdgeImpl
+import org.inego.takeoffrun.common.sem.concrete.impl.MonoEdge
 import org.inego.takeoffrun.common.sem.concrete.impl.SemanticGraphImpl
+import org.inego.takeoffrun.common.sem.concrete.impl.SymmetricalEdge
 import org.inego.takeoffrun.common.sem.ontology.Ontology
 import org.inego.takeoffrun.common.sem.ontology.RelationSlot
 import org.inego.takeoffrun.common.sem.ontology.impl.MonoRelation
@@ -34,7 +37,7 @@ class SemGraphGenerator(ontology: Ontology) {
 
         // First, assign every node some mono relations
         for (node in nodeCountRange) {
-            monoRelations.randomSmallSublist((1..2).random()).mapTo(graphEdges) {  MonoEdge(it, node) }
+            monoRelations.randomSmallSublist((1..2).random()).mapTo(graphEdges) { MonoEdge(it, node) }
         }
 
         // Randomly add non-mono edges until all nodes belong to the 0 cluster,
