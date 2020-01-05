@@ -5,8 +5,10 @@ import org.apache.logging.log4j.kotlin.logger
 import org.inego.takeoffrun.common.language.GrammaticalFeature
 import org.inego.takeoffrun.common.language.GrammaticalFeatureValue
 import org.inego.takeoffrun.common.language.LanguageBase
+import org.inego.takeoffrun.common.language.PartOfSpeech
 import org.inego.takeoffrun.common.language.impl.GrammaticalFeatureImpl
 import org.inego.takeoffrun.common.language.impl.LanguageImpl
+import org.inego.takeoffrun.common.language.impl.PartOfSpeechImpl
 import org.inego.takeoffrun.server.utils.StringAny
 import java.nio.file.Files
 import java.nio.file.Path
@@ -51,6 +53,7 @@ object LanguageLoader {
                 }
 
         loadState.importGrammaticalFeatures()
+        loadState.importPartsOfSpeech()
 
         log.info("Loading from $path finished.")
     }
@@ -69,6 +72,7 @@ class LanguageLoadState {
     private val elements = hashMapOf<String, ArrayList<Any>>()
 
     private val grammaticalFeatures = arrayListOf<GrammaticalFeature>()
+    private val partsOfSpeech = arrayListOf<PartOfSpeech>()
 
     fun appendElement(elementName: String, value: Any) {
         elements.computeIfAbsent(elementName) { arrayListOf() }
@@ -91,6 +95,19 @@ class LanguageLoadState {
                             GrammaticalFeatureValue(valueName, it["shortName"] as? String ?: valueName)
                         }
                 ))
+            }
+        }
+    }
+
+    fun importPartsOfSpeech() {
+        val blocks = elements.getOrElse("partsOfSpeech") { emptyList<Any>() }
+        for (block in blocks) {
+            @Suppress("UNCHECKED_CAST")
+            for (featureSrc in block as List<StringAny>) {
+                val name = featureSrc["name"] as String
+                val shortName = featureSrc["shortName"] as String
+
+                partsOfSpeech.add(PartOfSpeechImpl(name, shortName))
             }
         }
     }

@@ -6,4 +6,6 @@ import org.inego.takeoffrun.common.language.GrammaticalFeatureValue
 class GrammaticalFeatureImpl(
         override val name: String,
         override val possibleValues: List<GrammaticalFeatureValue>
-) : GrammaticalFeature
+) : GrammaticalFeature {
+    override fun toString() = "$name (${possibleValues.joinToString(",")})"
+}
