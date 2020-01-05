@@ -2,7 +2,10 @@ package org.inego.takeoffrun.server.service
 
 import io.ktor.util.extension
 import org.apache.logging.log4j.kotlin.logger
+import org.inego.takeoffrun.common.language.GrammaticalFeature
+import org.inego.takeoffrun.common.language.GrammaticalFeatureValue
 import org.inego.takeoffrun.common.language.LanguageBase
+import org.inego.takeoffrun.common.language.impl.GrammaticalFeatureImpl
 import org.inego.takeoffrun.common.language.impl.LanguageImpl
 import org.inego.takeoffrun.server.utils.StringAny
 import java.nio.file.Files
@@ -39,16 +42,56 @@ object LanguageLoader {
     private fun loadLanguage(path: Path) {
         log.info("Loading from $path...")
 
+        val loadState = LanguageLoadState()
+
         Files.walk(path, 1)
                 .filter { it.extension in YAML_EXTENSIONS }
                 .forEach {
-                    log.info("Reading $it")
+                    loadLanguageFromFile(it, loadState)
                 }
 
+        loadState.importGrammaticalFeatures()
+
         log.info("Loading from $path finished.")
+    }
+
+    private fun loadLanguageFromFile(filePath: Path, loadState: LanguageLoadState) {
+        log.info("Reading $filePath")
+        @Suppress("UNCHECKED_CAST")
+        val fileMap = objectMapper.readValue(filePath.toFile(), Map::class.java) as Map<String, Any>
+        for ((key, value) in fileMap) {
+            loadState.appendElement(key, value)
+        }
     }
 }
 
 class LanguageLoadState {
+    private val elements = hashMapOf<String, ArrayList<Any>>()
 
+    private val grammaticalFeatures = arrayListOf<GrammaticalFeature>()
+
+    fun appendElement(elementName: String, value: Any) {
+        elements.computeIfAbsent(elementName) { arrayListOf() }
+                .add(value)
+    }
+
+    fun importGrammaticalFeatures() {
+
+        val blocks = elements.getOrElse("grammaticalFeatures") { emptyList<Any>() }
+        for (block in blocks) {
+            @Suppress("UNCHECKED_CAST")
+            for (featureSrc in block as List<StringAny>) {
+                val name = featureSrc["name"] as String
+                val values = featureSrc["values"] as List<StringAny>
+
+                grammaticalFeatures.add(GrammaticalFeatureImpl(
+                        name,
+                        values.map {
+                            val valueName = it["name"] as String
+                            GrammaticalFeatureValue(valueName, it["shortName"] as? String ?: valueName)
+                        }
+                ))
+            }
+        }
+    }
 }

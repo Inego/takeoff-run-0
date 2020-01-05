@@ -31,19 +31,19 @@ dictionary:
         forms: сестра.сестр
     templates:
       песня:
-        nom: @я
-        acc: @ю
-        gen: @и
+        nom: '@я'
+        acc: '@ю'
+        gen: '@и'
       сестра:
-        nom: @а́
-        acc: @у́
-        gen: @ы́
+        nom: '@а́'
+        acc: '@у́'
+        gen: '@ы́'
   v:
     words:
       слушать:
         forms: думать.слу́ша
     templates:
       думать:
-        1st: @ю
-        2nd: @ешь
-        3rd: @ет
+        1st: '@ю'
+        2nd: '@ешь'
+        3rd: '@ет'
