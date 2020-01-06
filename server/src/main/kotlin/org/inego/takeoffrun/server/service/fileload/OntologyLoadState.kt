@@ -1,6 +1,6 @@
-package org.inego.takeoffrun.server.service
+package org.inego.takeoffrun.server.service.fileload
 
-import org.inego.takeoffrun.server.service.ontology.builder.OntologyBuilder
+import org.inego.takeoffrun.server.service.fileload.builder.OntologyBuilder
 
 data class OntologyLoadState(
         val ontologyBuilder: OntologyBuilder

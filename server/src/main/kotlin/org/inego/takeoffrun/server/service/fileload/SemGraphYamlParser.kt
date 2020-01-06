@@ -1,4 +1,4 @@
-package org.inego.takeoffrun.server.service
+package org.inego.takeoffrun.server.service.fileload
 
 import org.apache.logging.log4j.kotlin.logger
 import org.inego.takeoffrun.common.sem.concrete.GraphEdge

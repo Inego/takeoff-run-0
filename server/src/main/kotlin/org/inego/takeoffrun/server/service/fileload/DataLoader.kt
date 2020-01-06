@@ -1,6 +1,6 @@
 @file:Suppress("UNCHECKED_CAST")
 
-package org.inego.takeoffrun.server.service
+package org.inego.takeoffrun.server.service.fileload
 
 import io.ktor.util.extension
 import org.apache.logging.log4j.kotlin.logger
@@ -9,6 +9,7 @@ import org.inego.takeoffrun.common.sem.ontology.Relation
 import org.inego.takeoffrun.common.sem.ontology.impl.ActionTransitiveRelation
 import org.inego.takeoffrun.common.sem.ontology.impl.MonoRelation
 import org.inego.takeoffrun.common.sem.ontology.impl.SymmetricalRelation
+import org.inego.takeoffrun.server.service.*
 import org.inego.takeoffrun.server.utils.StringAny
 import java.io.FileInputStream
 import java.io.InputStream
