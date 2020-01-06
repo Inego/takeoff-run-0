@@ -10,6 +10,7 @@ import org.inego.takeoffrun.common.sem.ontology.impl.ActionTransitiveRelation
 import org.inego.takeoffrun.common.sem.ontology.impl.MonoRelation
 import org.inego.takeoffrun.common.sem.ontology.impl.SymmetricalRelation
 import org.inego.takeoffrun.server.service.*
+import org.inego.takeoffrun.server.service.fileload.ontology.OntologyLoadState
 import org.inego.takeoffrun.server.utils.StringAny
 import java.io.FileInputStream
 import java.io.InputStream

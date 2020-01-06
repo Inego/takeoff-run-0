@@ -1,4 +1,4 @@
-package org.inego.takeoffrun.server.service.fileload
+package org.inego.takeoffrun.server.service.fileload.ontology
 
 import org.inego.takeoffrun.server.service.fileload.ontology.builder.OntologyBuilder
 
