@@ -1,4 +1,4 @@
-package org.inego.takeoffrun.server.service.fileload.builder
+package org.inego.takeoffrun.server.service.fileload.ontology.builder
 
 import org.inego.takeoffrun.common.sem.ontology.Ontology
 import org.inego.takeoffrun.common.sem.ontology.Relation
