@@ -1,6 +1,8 @@
 package org.inego.takeoffrun.common.language
 
-interface Word {
+import org.inego.takeoffrun.common.language.inflection.Inflector
+
+interface Word : Inflector {
     val partOfSpeech: PartOfSpeech
 
     val inherentFeatures: List<GrammaticalFeatureValue>

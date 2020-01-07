@@ -2,22 +2,22 @@ package org.inego.takeoffrun.server.service.fileload.language
 
 import io.ktor.util.extension
 import org.apache.logging.log4j.kotlin.logger
-import org.inego.takeoffrun.common.language.GrammaticalFeature
-import org.inego.takeoffrun.common.language.GrammaticalFeatureValue
-import org.inego.takeoffrun.common.language.LanguageBase
-import org.inego.takeoffrun.common.language.PartOfSpeech
+import org.inego.takeoffrun.common.language.*
 import org.inego.takeoffrun.common.language.impl.GrammaticalFeatureImpl
 import org.inego.takeoffrun.common.language.impl.LanguageImpl
 import org.inego.takeoffrun.common.language.impl.PartOfSpeechImpl
+import org.inego.takeoffrun.common.language.inflection.InflectionTreeLeaf
+import org.inego.takeoffrun.common.language.inflection.InflectionTreeNode
 import org.inego.takeoffrun.server.service.fileload.YAML_EXTENSIONS
 import org.inego.takeoffrun.server.service.fileload.objectMapper
 import org.inego.takeoffrun.server.utils.StringAny
 import java.nio.file.Files
 import java.nio.file.Path
 
-object LanguageLoader {
+private val log = logger("LanguageLoader")
 
-    private val log = logger("LanguageLoader")
+
+object LanguageLoader {
 
     fun load(path: Path): List<LanguageBase> {
         log.info("Loading languages from $path...")
@@ -56,6 +56,7 @@ object LanguageLoader {
 
         loadState.importGrammaticalFeatures()
         loadState.importPartsOfSpeech()
+        loadState.importDictionary()
 
         log.info("Loading from $path finished.")
     }
@@ -70,11 +71,21 @@ object LanguageLoader {
     }
 }
 
+class PartOfSpeechDictionary {
+    val templates = arrayListOf<InflectionTreeNode>()
+    val words = arrayListOf<Word>()
+    val templatesRaw = hashMapOf<String, Any>()
+    val wordsRaw = hashMapOf<String, Any>()
+}
+
 class LanguageLoadState {
     private val elements = hashMapOf<String, ArrayList<Any>>()
 
     private val grammaticalFeatures = arrayListOf<GrammaticalFeature>()
     private val partsOfSpeech = arrayListOf<PartOfSpeech>()
+    private val partsOfSpeechShortNames = hashMapOf<String, PartOfSpeech>()
+
+    private val dictionary = hashMapOf<PartOfSpeech, PartOfSpeechDictionary>()
 
     fun appendElement(elementName: String, value: Any) {
         elements.computeIfAbsent(elementName) { arrayListOf() }
@@ -110,6 +121,40 @@ class LanguageLoadState {
                 val shortName = featureSrc["shortName"] as String
 
                 partsOfSpeech.add(PartOfSpeechImpl(name, shortName))
+            }
+        }
+
+        partsOfSpeech.associateByTo(partsOfSpeechShortNames) { it.shortName }
+        partsOfSpeech.associateWithTo(dictionary) { PartOfSpeechDictionary() }
+    }
+
+
+    fun parseInflectionTreeNode(yaml: Any): InflectionTreeNode {
+        if (yaml is String) {
+            return InflectionTreeLeaf(yaml)
+        }
+        @Suppress("UNCHECKED_CAST")
+        for ((key, value) in yaml as StringAny) {
+
+        }
+        TODO()
+    }
+
+    fun importDictionary() {
+        val blocks = elements.getOrElse("dictionary") { emptyList<Any>() }
+        for (block in blocks) {
+            @Suppress("UNCHECKED_CAST")
+            for ((posShortName, posData) in block as StringAny) {
+                posData as StringAny
+                val partOfSpeech = partsOfSpeechShortNames[posShortName]
+                if (partOfSpeech == null) {
+                    log.error("Cannot find part of speech $posShortName")
+                    continue
+                }
+                val partOfSpeechDictionary = dictionary[partOfSpeech]!!
+
+                posData["words"] ?.let { partOfSpeechDictionary.wordsRaw.putAll(it as StringAny) }
+                posData["templates"] ?.let { partOfSpeechDictionary.templatesRaw.putAll(it as StringAny) }
             }
         }
     }
