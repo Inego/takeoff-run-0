@@ -2,7 +2,7 @@ dictionary:
   pp:
     words:
       я:
-        person: 1st
+        features: 1st
         forms:
           nom: я
       мой:
@@ -24,10 +24,10 @@ dictionary:
   n:
     words:
       песня:
-        gender: fem
+        features: fem
         forms: песня.пе́сн
       сестра:
-        gender: fem
+        features: fem
         forms: сестра.сестр
     templates:
       песня:

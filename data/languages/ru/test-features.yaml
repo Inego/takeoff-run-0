@@ -20,3 +20,9 @@ grammaticalFeatures:
       - name: 1st
       - name: 2nd
       - name: 3rd
+  - name: animacy
+    values:
+      - name: animate
+        shortName: anim
+      - name: inanimate
+        shortName: inanim
