@@ -1,53 +1,60 @@
+syntaxTreeNodeTypes:
+  - ng
+  - sentence
+
 rules:
-  - template:
+  - for:
       _speaker: 0
-    output:
+    write: ng
+    with:
       val: pp.я
       links: _speaker.0
 
-  - template:
+  - for:
       song: 0
-    output:
+    write: ng
+    with:
       val: n.песня
       links: song.0
 
-  - template:
+  - for:
       female: 0
       _speaker: 1
       siblings: [0, 1]
-    output:
-      _NG:
+    write: ng
+    with:
       - val: pp.мой
         links: _speaker.1
-        pull: gender.next
+        take: gender.next
       - val: n.сестра
         links:
         - female.0
         - siblings.0
 
 #   Verb-transitive:  subj.nom verb obj.acc
-  - template:
-      _NG: [0, 1]
+  - for:
+      _node-type.ng: [0, 1]
       listen-to: [0, 1]
-    output:
-      sentence:
-      - val: NG.0
+    write: sentence
+    with:
+      - val: 0
         set: case.nom
         links: listen-to.0
       - val: v.слушать
-        pull: person.prev
+        take: person.prev
         links: listen-to
-      - val: NG.1
+      - val: 1
         set: case.acc
         links: listen-to.1
 
-  - template:
-      _NG: [0, 1]
+  - for:
+      _node-type.ng: [0, 1]
+      _feature.3rd: 0
       author-of: [0, 1]
-    output:
-      NG:
-      - val: NG.1
+    write: ng
+    with:
+      - val: 1
         links: author-of.1
-      - val: NG.0
+      - val: 0
         set: case.gen
         links: author-of.0
