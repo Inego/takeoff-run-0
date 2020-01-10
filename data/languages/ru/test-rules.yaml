@@ -4,23 +4,23 @@ syntaxTreeNodeTypes:
 
 rules:
   - for:
-      _speaker: 0
+      rel._speaker: 0
     write: ng
     with:
       val: pp.я
       links: _speaker.0
 
   - for:
-      song: 0
+      rel.song: 0
     write: ng
     with:
       val: n.песня
       links: song.0
 
   - for:
-      female: 0
-      _speaker: 1
-      siblings: [0, 1]
+      rel.female: 0
+      rel._speaker: 1
+      rel.siblings: [0, 1]
     write: ng
     with:
       - val: pp.мой
@@ -34,7 +34,7 @@ rules:
 #   Verb-transitive:  subj.nom verb obj.acc
   - for:
       _node-type.ng: [0, 1]
-      listen-to: [0, 1]
+      rel.listen-to: [0, 1]
     write: sentence
     with:
       - val: 0
@@ -50,7 +50,7 @@ rules:
   - for:
       _node-type.ng: [0, 1]
       _feature.3rd: 0
-      author-of: [0, 1]
+      rel.author-of: [0, 1]
     write: ng
     with:
       - val: 1
