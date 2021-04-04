@@ -1,7 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.3.61"
+    kotlin("jvm") version "1.4.32"
+
 }
 
 group = "org.inego.takeoffrun"
@@ -13,7 +14,7 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    compile("com.google.guava:guava:28.1-jre")
+    implementation("com.google.guava:guava:28.1-jre")
 }
 
 tasks {
@@ -26,5 +27,6 @@ tasks {
 }
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
+    useIR = true
     freeCompilerArgs = listOf("-Xinline-classes")
 }

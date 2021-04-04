@@ -1,7 +1,7 @@
 
 
 plugins {
-    val kotlinVersion = "1.3.61"
+    val kotlinVersion = "1.4.32"
     kotlin("jvm") version kotlinVersion
     application
 }
@@ -17,35 +17,31 @@ repositories {
 }
 
 object Versions {
-    val ktor = "1.2.6"
-    val log4j = "2.13.0"
+    val ktor = "1.5.+"
+    val log4j = "2.14.0"
     val jackson = "2.10.1"
 }
 
 
 dependencies {
-    compile("org.kodein.di:kodein-di-generic-jvm:6.5.1")
+    implementation("org.kodein.di:kodein-di-generic-jvm:6.5.1")
 
-    compile("io.ktor:ktor-server-core:${Versions.ktor}")
-    compile("io.ktor:ktor-server-netty:${Versions.ktor}")
-    compile("io.ktor:ktor-html-builder:${Versions.ktor}")
+    implementation("io.ktor:ktor-server-core:${Versions.ktor}")
+    implementation("io.ktor:ktor-server-netty:${Versions.ktor}")
 
-    compile("org.apache.logging.log4j:log4j-api:${Versions.log4j}")
-    compile("org.apache.logging.log4j:log4j-core:${Versions.log4j}")
-    compile("org.apache.logging.log4j:log4j-api-kotlin:1.0.0")
+    implementation("org.apache.logging.log4j:log4j-api:${Versions.log4j}")
+    implementation("org.apache.logging.log4j:log4j-core:${Versions.log4j}")
+    implementation("org.apache.logging.log4j:log4j-api-kotlin:1.0.0")
 
-    compile("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${Versions.jackson}")
-    compile("com.fasterxml.jackson.core:jackson-databind:${Versions.jackson}")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${Versions.jackson}")
+    implementation("com.fasterxml.jackson.core:jackson-databind:${Versions.jackson}")
 
-    compile("com.google.guava:guava:28.1-jre")
+    implementation("com.google.guava:guava:28.1-jre")
 
     implementation(kotlin("stdlib-jdk8"))
     implementation(project(":common"))
 }
 
-application {
-    mainClassName = "org.inego.takeoffrun.server.app.ServerApplicationKt.main"
-}
 
 tasks {
     compileKotlin {
