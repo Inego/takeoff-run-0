@@ -1,20 +1,17 @@
 package org.inego.takeoffrun.server.app
 
-import io.ktor.application.Application
-import io.ktor.application.call
-import io.ktor.response.respondText
-import io.ktor.routing.get
-import io.ktor.routing.routing
+import io.ktor.server.application.*
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
-import org.kodein.di.Kodein
-import org.kodein.di.generic.bind
-import org.kodein.di.generic.instance
-import org.kodein.di.generic.singleton
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
+import org.kodein.di.DI
+import org.kodein.di.bind
+import org.kodein.di.instance
+import org.kodein.di.singleton
 import java.nio.file.FileSystems
 import java.security.SecureRandom
 import java.util.*
-
 
 fun main() {
     embeddedServer(Netty, port = 8080) {
@@ -22,12 +19,11 @@ fun main() {
     }.start(wait = true)
 }
 
-fun Application.myKodeinApp() = myKodeinApp(Kodein {
+fun Application.myKodeinApp() = myKodeinApp(DI {
     bind<Random>() with singleton { SecureRandom() }
 })
 
-fun Application.myKodeinApp(kodein: Kodein) {
-
+fun Application.myKodeinApp(kodein: DI) {
     val random by kodein.instance<Random>()
 
     routing {
@@ -37,7 +33,6 @@ fun Application.myKodeinApp(kodein: Kodein) {
         }
     }
 
-//    println(System.getProperty("user.dir"))
     FileSystems.getDefault()
 }
 

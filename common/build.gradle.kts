@@ -1,8 +1,5 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    kotlin("jvm") version "1.4.32"
-
+    kotlin("jvm") version "2.1.0" // Updated to the latest Kotlin version
 }
 
 group = "org.inego.takeoffrun"
@@ -13,20 +10,6 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
-    implementation("com.google.guava:guava:28.1-jre")
+    implementation("com.google.guava:guava:33.4.0-jre")
 }
 
-tasks {
-    compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-}
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-    useIR = true
-    freeCompilerArgs = listOf("-Xinline-classes")
-}

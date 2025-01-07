@@ -2,7 +2,6 @@
 
 package org.inego.takeoffrun.server.service.fileload
 
-import io.ktor.util.extension
 import org.apache.logging.log4j.kotlin.logger
 import org.inego.takeoffrun.common.sem.ontology.Ontology
 import org.inego.takeoffrun.common.sem.ontology.Relation
@@ -17,6 +16,7 @@ import java.io.FileInputStream
 import java.io.InputStream
 import java.nio.file.FileSystems
 import java.nio.file.Files
+import kotlin.io.path.extension
 import org.intellij.lang.annotations.Language as IdeaLang
 
 
@@ -61,7 +61,7 @@ private fun loadOntology(): Ontology {
 
 fun testParseSemGraph(ontology: Ontology) {
 
-    // "I'm listening to a song of my sister"
+    // "I'm listening to my sister's song."
     @IdeaLang("YAML")
     val yaml = """
         _speaker: 0

@@ -1,6 +1,5 @@
 package org.inego.takeoffrun.server.service.fileload.language
 
-import io.ktor.util.extension
 import org.apache.logging.log4j.kotlin.logger
 import org.inego.takeoffrun.common.language.*
 import org.inego.takeoffrun.common.language.impl.GrammaticalFeatureImpl
@@ -13,6 +12,7 @@ import org.inego.takeoffrun.server.service.fileload.objectMapper
 import org.inego.takeoffrun.server.utils.StringAny
 import java.nio.file.Files
 import java.nio.file.Path
+import kotlin.io.path.extension
 
 private val log = logger("LanguageLoader")
 
